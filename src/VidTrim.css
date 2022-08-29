@@ -1,0 +1,32 @@
+#Sliders{
+    display: inline-flex;
+    width: 60%;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.VidTrim {
+    width: 80%;
+    margin-top: 5%;
+}
+
+#output-video {
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
+#btnContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+    
+}
+
+#btnConvert {
+    padding: 5px ;
+}
+
+.details {
+    font-size: small;
+}
