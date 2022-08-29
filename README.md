@@ -1,6 +1,6 @@
 # React Video Trimmer
 
-This project is built using react & node.js to trim video files using the ffmpeg web assembly (wasm) implementation [GitHub](https://github.com/ffmpegwasm/ffmpeg.wasm) to process the video on the client to avoid lengthy processing on a server, files are exported as .mp4 files but most video types are accepted as an input.
+This project is built using react & node.js to trim video files using the ffmpeg web assembly (wasm) implementation [GitHub](https://github.com/ffmpegwasm/ffmpeg.wasm) to process the video on the client to avoid lengthy processing on a server, files are exported as .mp4 files. Most video types are accepted as an input (.mp4, .mov, .flv, .wmv, .webm) .avi or .flv files do not work.
 
 # Demo
 
