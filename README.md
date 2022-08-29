@@ -1,70 +1,28 @@
-# Getting Started with Create React App
+# React Video Trimmer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is built using react & node.js to trim video files using the ffmpeg web assembly (wasm) implementation [GitHub](https://github.com/ffmpegwasm/ffmpeg.wasm) to process the video on the client to avoid lengthy processing on a server, files are exported as .mp4 files but most video types are accepted as an input.
 
-## Available Scripts
+# Demo
 
-In the project directory, you can run:
+A demo of the app can be found [here](https://react-vid-trim.herokuapp.com/)
 
-### `npm start`
+# Usage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Select a video file for trimming.
+2. Adjust start & end sliders to the desired times.
+3. Click the trim video button and wait for processing to finish.
+4. The processed video is displayed at the bottom of the page to view.
+5. The trimmed video can be downloaded using the options in the video player, if desired.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+If you would like to run the app locally clone the repo and install the dependencies using by running `npm install` within the directory, then run `node server` and navigate to `localhost:9000`
 
-### `npm test`
+# Issues Encountered
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## SharedArrayBuffer is not defined
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Due to the spectre vulnerability being discovered most modern browsers disabled the SharedArrayBuffer feature by default for security, in order to allow access to this feature we must send additional information in the http header in the server response to allow addition Cross Origin Resources to be accessed, in this case the ffmpeg wasm files. This was done in the node.js server.js file, the headers required to be set were: `Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: require-corp` based on the advice [here](https://stackoverflow.com/questions/68592278/sharedarraybuffer-is-not-defined)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Unable to access createFFmpeg.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+While initially developing the application I ran into an issue with the app being unable to access the required javascript file but found that it is a known issue with using the ffmpeg library with react, this was fixed by downgrading the version being used to `@ffmpeg/ffmpeg v0.9.8` & `@ffmpeg/core v0.9.0` as suggested [here](https://github.com/ffmpegwasm/ffmpeg.wasm/issues/229#issuecomment-881122522)
